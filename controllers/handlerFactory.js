@@ -18,13 +18,11 @@ exports.deleteOne = (Model) =>
 
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    console.log('Route to update the data');
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       // runValidators: true,
     });
-    console.log('Updated the required fields');
-    console.log(doc);
+
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
     }
@@ -69,7 +67,6 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    console.log('getting the model');
     // To allow for nested GET reviews on tour (hack)
     let filter = {};
     if (req.params.tourId) filter = { tour: req.params.tourId };
